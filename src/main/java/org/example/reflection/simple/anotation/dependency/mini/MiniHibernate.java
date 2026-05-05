@@ -10,10 +10,12 @@ import java.util.List;
 
 public class MiniHibernate {
 
-    private String url = "jdbc:mysql://localhost:3306/my_db";
+    private String url = "jdbc:mariadb://localhost:3306/my_db";
     private String user = "root";
     private String password = "12345";
+    private String driver = "org.mariadb.jdbc.Driver";
     public void persist(Object object) throws Exception {
+        Class.forName(driver);
         Class<?> clazz = object.getClass();
         List<String> columnNames = new ArrayList<>();
         List<String> columnValues = new ArrayList<>();
@@ -55,6 +57,7 @@ public class MiniHibernate {
 
     // Hàm tự động tạo bảng dựa trên Class
     public void createTable(Class<?> clazz) throws Exception {
+        Class.forName(driver);
         if (!clazz.isAnnotationPresent(Entity.class)) return;
 
         String tableName = clazz.getAnnotation(Entity.class).table();
