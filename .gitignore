@@ -1,19 +1,27 @@
+# ===========================
+# BACKEND - Java / Spring Boot
+# ===========================
+
+# Maven build output
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-.kotlin
 
-### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
+# Maven wrapper
+.mvn/timing.properties
+.mvn/jvm.config
+
+# Kotlin
+.kotlin/
+
+# IntelliJ IDEA
+.idea/
 *.iws
 *.iml
 *.ipr
 
-### Eclipse ###
+# Eclipse
 .apt_generated
 .classpath
 .factorypath
@@ -22,7 +30,7 @@ target/
 .springBeans
 .sts4-cache
 
-### NetBeans ###
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
@@ -32,8 +40,68 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
-.vscode/
+# Spring Boot
+*.log
+logs/
 
-### Mac OS ###
+# Application secrets (never commit)
+application-local.properties
+application-secret.properties
+application-prod.properties
+*.env
+
+# ===========================
+# FRONTEND - Node.js / React / Vite
+# ===========================
+
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Build output
+dist/
+frontend/dist/
+build/
+frontend/build/
+
+# Vite cache
+.vite/
+frontend/.vite/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+# Package manager locks (giữ lại 1 trong 2, bỏ comment nếu cần bỏ qua)
+# package-lock.json
+# yarn.lock
+
+# npm/yarn debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ===========================
+# CHUNG / COMMON
+# ===========================
+
+# OS generated files
 .DS_Store
+Thumbs.db
+desktop.ini
+
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# Temporary files
+*.tmp
+*.swp
+*.bak
+*~
