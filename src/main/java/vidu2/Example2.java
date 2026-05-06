@@ -14,6 +14,7 @@ interface FunctionExample<T, R> {
         for (T t : list) {
             result.add(f.apply(t)); // Áp dụng hàm f cho từng phần tử
         }
+
         return result;
     }
 }
