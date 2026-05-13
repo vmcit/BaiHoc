@@ -9,7 +9,7 @@ set JAVA_HOME=C:\Users\cuongmanh.vu\.jdks\ms-17.0.18
 set PATH=!JAVA_HOME!\bin;!PATH!
 
 REM Change to project directory
-cd /d "D:\Book\ocp\baihoc\BaiHoc"
+cd /d "D:\Book\ocp\baihoc\BaiHoc\backend"
 
 echo.
 echo ╔════════════════════════════════════════════════════════════════════════════╗

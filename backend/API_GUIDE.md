@@ -146,6 +146,8 @@ curl http://localhost:8080/api/protected/admin/users ^
 
 ### 6 — Xem danh sách user — ROLE_ADMIN → 200
 
+> Trả về dữ liệu **thực tế từ database** (không hardcode).
+
 ```cmd
 curl http://localhost:8080/api/protected/admin/users ^
   -H "Authorization: Bearer ADMIN_TOKEN"
@@ -154,14 +156,31 @@ curl http://localhost:8080/api/protected/admin/users ^
 **200 OK:**
 ```json
 {
+  "success": true,
+  "message": "Danh sách tất cả user",
   "data": [
-    { "id": 1, "username": "admin",   "roles": ["ROLE_ADMIN"], "status": "ACTIVE" },
-    { "id": 2, "username": "alice",   "roles": ["ROLE_USER"],  "status": "ACTIVE" },
-    { "id": 3, "username": "bob",     "roles": ["ROLE_USER"],  "status": "ACTIVE" },
-    { "id": 4, "username": "charlie", "roles": ["ROLE_USER"],  "status": "LOCKED" }
+    {
+      "id": 1,
+      "username": "admin",
+      "email": "admin@example.com",
+      "fullName": "Administrator",
+      "roles": ["ADMIN"],
+      "status": "ACTIVE"
+    },
+    {
+      "id": 2,
+      "username": "user1",
+      "email": "user1@example.com",
+      "fullName": "User One",
+      "roles": ["USER"],
+      "status": "ACTIVE"
+    }
   ]
 }
 ```
+
+> **Ghi chú:** `roles` trả về tên không có prefix `ROLE_` (VD: `"ADMIN"`, `"USER"`).  
+> Số lượng và nội dung record phụ thuộc dữ liệu thực trong bảng `tbl_users`.
 
 ---
 

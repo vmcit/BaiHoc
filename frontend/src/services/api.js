@@ -22,4 +22,8 @@ export const authApi = {
   resetPassword: (data) => api.post('/api/users/reset-password', data),
 }
 
+export const userApi = {
+  getAll: () => api.get('/api/protected/admin/users'),
+}
+
 export default api

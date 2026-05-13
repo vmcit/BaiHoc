@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { authApi } from '../services/api'
 
@@ -51,6 +51,12 @@ export default function Home() {
             </div>
           )}
         </div>
+
+        {user?.roles?.includes('ADMIN') && (
+          <Link to="/users" className="btn-users">
+            👥 Quản lý User
+          </Link>
+        )}
 
         <button className="btn-logout" onClick={handleLogout}>
           🚪 Đăng Xuất

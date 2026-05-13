@@ -1,6 +1,9 @@
 package com.example.springboot.controller;
 
 import com.example.springboot.dto.ApiResponse;
+import com.example.springboot.entities.Role;
+import com.example.springboot.entities.User;
+import com.example.springboot.repository.UserRepository;
 import com.example.springboot.security.JwtTokenProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * ProtectedController - Demo phân quyền ROLE_ADMIN / ROLE_USER
@@ -27,9 +31,11 @@ import java.util.Set;
 public class ProtectedController {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final UserRepository userRepository;
 
-    public ProtectedController(JwtTokenProvider jwtTokenProvider) {
+    public ProtectedController(JwtTokenProvider jwtTokenProvider, UserRepository userRepository) {
         this.jwtTokenProvider = jwtTokenProvider;
+        this.userRepository = userRepository;
     }
 
     // ─── Helper: xác thực token, trả về null nếu invalid ─────────
@@ -109,12 +115,16 @@ public class ProtectedController {
             return forbidden("ROLE_ADMIN");
         }
 
-        List<Map<String, Object>> users = List.of(
-            Map.of("id", 1, "username", "admin",    "email", "admin@example.com",   "roles", List.of("ROLE_ADMIN"), "status", "ACTIVE"),
-            Map.of("id", 2, "username", "alice",    "email", "alice@example.com",   "roles", List.of("ROLE_USER"),  "status", "ACTIVE"),
-            Map.of("id", 3, "username", "bob",      "email", "bob@example.com",     "roles", List.of("ROLE_USER"),  "status", "ACTIVE"),
-            Map.of("id", 4, "username", "charlie",  "email", "charlie@example.com", "roles", List.of("ROLE_USER"),  "status", "LOCKED")
-        );
+        List<Map<String, Object>> users = userRepository.findAll().stream()
+                .map(u -> Map.<String, Object>of(
+                        "id",       u.getId(),
+                        "username", u.getUsername(),
+                        "email",    u.getEmail(),
+                        "fullName", u.getFullName() != null ? u.getFullName() : "",
+                        "status",   u.getStatus(),
+                        "roles",    u.getRoles().stream().map(Role::getRoleName).collect(Collectors.toList())
+                ))
+                .collect(Collectors.toList());
         return ResponseEntity.ok(ApiResponse.success("Danh sách tất cả user", users));
     }
 

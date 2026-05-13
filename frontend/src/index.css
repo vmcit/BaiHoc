@@ -326,3 +326,206 @@ body {
     padding: 32px 20px;
   }
 }
+
+/* ═══════════════════════════════════════════
+   BTN USERS (Home → UserList)
+═══════════════════════════════════════════ */
+.btn-users {
+  display: block;
+  width: 100%;
+  padding: 11px 36px;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.btn-users:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════
+   USER LIST PAGE
+═══════════════════════════════════════════ */
+.userlist-container {
+  min-height: 100vh;
+  padding: 32px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.userlist-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px 36px;
+  width: 100%;
+  max-width: 900px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18);
+}
+
+.userlist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.userlist-header h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 4px;
+}
+
+.userlist-sub {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.userlist-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-back {
+  padding: 9px 20px;
+  background: #f5f5f5;
+  color: #555;
+  border: 1.5px solid #ddd;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-back:hover {
+  background: #eee;
+}
+
+.userlist-loading {
+  text-align: center;
+  color: #888;
+  padding: 40px 0;
+  font-size: 1rem;
+}
+
+.userlist-count {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.userlist-table-wrap {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid #eee;
+}
+
+.userlist-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.userlist-table thead tr {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+}
+
+.userlist-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.userlist-table tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.15s;
+}
+
+.userlist-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.userlist-table tbody tr:hover {
+  background: #f8f8ff;
+}
+
+.userlist-table td {
+  padding: 12px 16px;
+  color: #444;
+  vertical-align: middle;
+}
+
+.td-id {
+  color: #aaa;
+  font-size: 0.8rem;
+}
+
+.td-bold {
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.td-email {
+  color: #667eea;
+  font-size: 0.85rem;
+}
+
+.badge-admin {
+  background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-active {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-locked {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.status-inactive {
+  background: #fce4ec;
+  color: #c62828;
+}
+
+@media (max-width: 700px) {
+  .userlist-card {
+    padding: 24px 16px;
+  }
+
+  .userlist-header {
+    flex-direction: column;
+  }
+
+  .userlist-table th,
+  .userlist-table td {
+    padding: 10px 10px;
+  }
+}

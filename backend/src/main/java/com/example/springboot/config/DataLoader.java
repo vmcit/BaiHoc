@@ -32,18 +32,18 @@ public class DataLoader {
             
             // 1. Tạo Permissions
             System.out.println("📝 Creating Permissions...");
-            Permission createUser = createPermissionIfNotExists(permissionRepository, 
-                    "CREATE_USER", "Quyền tạo user mới");
-            Permission editUser = createPermissionIfNotExists(permissionRepository, 
-                    "EDIT_USER", "Quyền chỉnh sửa user");
-            Permission deleteUser = createPermissionIfNotExists(permissionRepository, 
-                    "DELETE_USER", "Quyền xóa user");
-            Permission viewReport = createPermissionIfNotExists(permissionRepository, 
-                    "VIEW_REPORT", "Quyền xem báo cáo");
-            Permission viewProfile = createPermissionIfNotExists(permissionRepository, 
-                    "VIEW_PROFILE", "Quyền xem hồ sơ người dùng");
-            Permission editProfile = createPermissionIfNotExists(permissionRepository, 
-                    "EDIT_PROFILE", "Quyền chỉnh sửa hồ sơ cá nhân");
+            Permission createUser = createPermissionIfNotExists(permissionRepository,
+                    "CREATE_USER", "Permission to create new users");
+            Permission editUser = createPermissionIfNotExists(permissionRepository,
+                    "EDIT_USER", "Permission to edit users");
+            Permission deleteUser = createPermissionIfNotExists(permissionRepository,
+                    "DELETE_USER", "Permission to delete users");
+            Permission viewReport = createPermissionIfNotExists(permissionRepository,
+                    "VIEW_REPORT", "Permission to view reports");
+            Permission viewProfile = createPermissionIfNotExists(permissionRepository,
+                    "VIEW_PROFILE", "Permission to view user profiles");
+            Permission editProfile = createPermissionIfNotExists(permissionRepository,
+                    "EDIT_PROFILE", "Permission to edit own profile");
             System.out.println("✓ Permissions created successfully\n");
             
             // 2. Tạo Roles
@@ -52,7 +52,7 @@ public class DataLoader {
             // ADMIN role
             Role adminRole = null;
             if (!roleRepository.existsByRoleName("ADMIN")) {
-                adminRole = new Role("ADMIN", "Vai trò quản trị viên");
+                adminRole = new Role("ADMIN", "Administrator role");
                 Set<Permission> adminPermissions = new HashSet<>();
                 adminPermissions.add(createUser);
                 adminPermissions.add(editUser);
@@ -71,7 +71,7 @@ public class DataLoader {
             // USER role
             Role userRole = null;
             if (!roleRepository.existsByRoleName("USER")) {
-                userRole = new Role("USER", "Vai trò người dùng bình thường");
+                userRole = new Role("USER", "Regular user role");
                 Set<Permission> userPermissions = new HashSet<>();
                 userPermissions.add(viewProfile);
                 userPermissions.add(editProfile);
@@ -86,7 +86,7 @@ public class DataLoader {
             // MODERATOR role
             Role moderatorRole = null;
             if (!roleRepository.existsByRoleName("MODERATOR")) {
-                moderatorRole = new Role("MODERATOR", "Vai trò người quản lý nội dung");
+                moderatorRole = new Role("MODERATOR", "Content moderator role");
                 Set<Permission> modPermissions = new HashSet<>();
                 modPermissions.add(viewReport);
                 modPermissions.add(viewProfile);

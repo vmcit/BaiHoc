@@ -4,6 +4,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import ForgotPassword from './pages/ForgotPassword'
 import Home from './pages/Home'
+import UserList from './pages/UserList'
 
 function PrivateRoute({ children }) {
   const { user } = useAuth()
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
           <Route path="/forgot-password" element={<PublicRoute><ForgotPassword /></PublicRoute>} />
           <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
+          <Route path="/users" element={<PrivateRoute><UserList /></PrivateRoute>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
