@@ -20,6 +20,13 @@ export const authApi = {
   logout: (data) => api.post('/api/auth/logout', data),
   forgotPassword: (data) => api.post('/api/users/forgot-password', data),
   resetPassword: (data) => api.post('/api/users/reset-password', data),
+  // Đăng nhập bằng SĐT + OTP
+  phoneLogin: (data) => api.post('/api/auth/phone-login', data),
+  verifyOtp: (data) => api.post('/api/auth/verify-otp', data),
+  // Đăng nhập bằng Google Authenticator (TOTP)
+  qrLogin: (data) => api.post('/api/auth/qr-login', data),
+  totpActivate: (data) => api.post('/api/auth/totp/activate', data),
+  totpVerify: (data) => api.post('/api/auth/totp/verify', data),
 }
 
 export const userApi = {

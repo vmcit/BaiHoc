@@ -65,6 +65,31 @@ export default function Login() {
           </button>
         </form>
 
+        <div className="auth-divider">
+          <span>hoặc</span>
+        </div>
+
+        <Link to="/phone-login" className="btn-google" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', textDecoration: 'none', marginBottom: '0.6rem' }}>
+          📱 Đăng nhập bằng Số Điện Thoại
+        </Link>
+
+        <Link to="/qr-login" className="btn-google" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', textDecoration: 'none', marginBottom: '0.6rem' }}>
+          🔑 Đăng nhập bằng Google Authenticator
+        </Link>
+
+        <a
+          href="http://localhost:8080/oauth2/authorization/google"
+          className="btn-google"
+        >
+          <img
+            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+            alt="Google"
+            width="20"
+            height="20"
+          />
+          Đăng nhập bằng Google
+        </a>
+
         <div className="auth-links">
           <Link to="/forgot-password">Quên mật khẩu?</Link>
           <span className="divider"> · </span>

@@ -61,7 +61,24 @@ public class User {
     
     @Column(name = "updated_at")
     private Long updatedAt = System.currentTimeMillis();
-    
+
+    // OAuth2 fields
+    @Column(name = "provider", length = 20)
+    private String provider; // "LOCAL", "GOOGLE"
+
+    @Column(name = "provider_id", length = 255)
+    private String providerId; // Google sub (unique ID)
+
+    @Column(name = "avatar_url", length = 500)
+    private String avatarUrl; // Ảnh đại diện từ Google
+
+    // TOTP / Google Authenticator
+    @Column(name = "totp_secret", length = 100)
+    private String totpSecret;
+
+    @Column(name = "totp_enabled", nullable = false)
+    private Boolean totpEnabled = false;
+
     // Many-to-Many relationship với Role
     @ManyToMany(fetch = jakarta.persistence.FetchType.EAGER)
     @JoinTable(
@@ -196,7 +213,47 @@ public class User {
     public void setRefreshTokens(Set<RefreshToken> refreshTokens) {
         this.refreshTokens = refreshTokens;
     }
-    
+
+    public String getProvider() {
+        return provider;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
+
+    public String getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(String providerId) {
+        this.providerId = providerId;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getTotpSecret() {
+        return totpSecret;
+    }
+
+    public void setTotpSecret(String totpSecret) {
+        this.totpSecret = totpSecret;
+    }
+
+    public Boolean getTotpEnabled() {
+        return totpEnabled != null && totpEnabled;
+    }
+
+    public void setTotpEnabled(Boolean totpEnabled) {
+        this.totpEnabled = totpEnabled;
+    }
+
     @Override
     public String toString() {
         return "User{" +

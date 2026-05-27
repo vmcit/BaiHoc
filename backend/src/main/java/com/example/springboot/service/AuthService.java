@@ -345,4 +345,82 @@ public class AuthService {
             System.err.println("Warning: Could not send confirmation email: " + e.getMessage());
         }
     }
+
+    // ─────────────────────────────────────────────────────────────────
+    // Đăng nhập bằng SĐT + OTP
+    // ─────────────────────────────────────────────────────────────────
+
+    /**
+     * Xác thực SĐT + mật khẩu (bước 1 - trước khi gửi OTP)
+     */
+    public void verifyPhoneAndPassword(String phone, String password) {
+        String normalizedPhone = normalizePhone(phone);
+        User user = userRepository.findByPhone(normalizedPhone)
+                .orElseThrow(() -> new RuntimeException("Số điện thoại chưa được đăng ký"));
+
+        if (!"ACTIVE".equals(user.getStatus())) {
+            throw new RuntimeException("Tài khoản đã bị khóa hoặc không hoạt động");
+        }
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new RuntimeException("Mật khẩu không đúng");
+        }
+    }
+
+    /**
+     * Tạo JWT sau khi OTP đã xác minh thành công (bước 2)
+     */
+    @Transactional
+    public LoginResponse loginByPhone(String phone) {
+        User user = userRepository.findByPhone(normalizePhone(phone))
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
+
+        // Reset login attempts
+        user.setLoginAttempts(0);
+        user.setLastLogin(System.currentTimeMillis());
+        userRepository.save(user);
+
+        Set<String> roles = user.getRoles().stream()
+                .map(Role::getRoleName)
+                .collect(Collectors.toSet());
+
+        String accessToken = jwtTokenProvider.generateAccessToken(user.getUsername(), user.getId(), roles);
+        String refreshTokenString = jwtTokenProvider.generateRefreshToken(user.getUsername(), user.getId());
+
+        RefreshToken refreshToken = new RefreshToken(
+                user, refreshTokenString,
+                System.currentTimeMillis() + 604800000L
+        );
+        refreshTokenRepository.save(refreshToken);
+
+        Set<String> permissions = new HashSet<>();
+        for (Role role : user.getRoles()) {
+            permissions.addAll(role.getPermissions().stream()
+                    .map(Permission::getPermissionName)
+                    .collect(Collectors.toSet()));
+        }
+
+        return new LoginResponse(
+                user.getId(), user.getUsername(), user.getEmail(), user.getFullName(),
+                accessToken, refreshTokenString,
+                jwtTokenProvider.getTokenExpirationTime(accessToken),
+                roles, permissions
+        );
+    }
+
+    /**
+     * Chuẩn hóa số điện thoại về dạng 0xxxxxxxxx
+     * +84968965682 → 0968965682
+     * +10968965682 → 0968965682
+     */
+    private String normalizePhone(String phone) {
+        if (phone == null) return null;
+        String p = phone.trim().replaceAll("[\\s\\-()]", "");
+        if (p.startsWith("+84")) return "0" + p.substring(3);
+        if (p.startsWith("84") && p.length() == 11) return "0" + p.substring(2);
+        // Loại bỏ mã quốc gia +1 (US) nếu browser tự thêm
+        if (p.startsWith("+1")) return p.substring(2);
+        if (p.startsWith("+")) return p.substring(1); // fallback: bỏ dấu +
+        return p;
+    }
 }
